@@ -1,0 +1,68 @@
+# Exercise Sheet 2
+
+## Question 1
+Let $X$ be a random variable with expectation $\mu$ and variance $\sigma^2$. Find the expectation and variance of the random variable $Y = \frac{X - \mu}{\sigma}$.\
+**Solution.** 
+$$\begin{aligned} 
+&\textbf{Expectation:} \quad & \mathbb{E}(Y) = \frac{\mathbb{E}(X) - \mu}{\sigma} = 0.\\
+&\textbf{Variance:}    \quad & Var(Y) =\frac{\sigma^2}{\sigma^2} = 1. 
+\end{aligned}$$
+
+## Question 2
+Let $X$ be a discrete random variable with $\mathbb{E}(X^2) = 0$.
+
+**Question 2.1** Show that $P(X = 0) = 1$.\
+**Solution.** Since we are given that $$\mathbb{E}(X^2) = \sum_{\text{all }x}x^2 P(X = x) = 0,$$ and since both $x^2$ and $P(X = x)$ are non-negative values, we can deduce that $X = 0$ is the only possible circumstance. As a result, $P(X = 0) = 1$.
+
+**Question 2.2** What is the $Var(X)$?\
+**Solution.** We need to calculate the expected value of $X$ first, $$\mathbb{E}(X) = 0.$$ We are given that $\mathbb{E}(X^2) = 0$. As a result, $$Var(X) = \mathbb{E}(X^2) - (\mathbb{E}(X))^2 = 0.$$
+
+## Question 3
+The random variable, $X$, has the following probability mass function $$p(x) = \frac{c}{x(x+1)} \ \ \ (x = 1,2,3,...)$$
+
+**Question 3.1** Find the value of the constant $c$.\
+**Solution.** $$p(x) = \frac{c}{x(x+1)} = \frac{c}{x} - \frac{c}{x+1}$$ Since we know that probability mass function (p(x)) has the property that $\sum p(x) = 1$, $$\sum_{x=1}^{\infty} p(x) = \lim_{n\to\infty}\sum_{x=1}^{n}(\frac{c}{x} - \frac{c}{x+1}) = \lim_{n\to\infty} (\frac{c}{1} - \frac{c}{2} + \frac{c}{2}  + ...  - \frac{c}{n} + \frac{c}{n} - \frac{c}{n+1}) = 1$$ $$\therefore \ \lim_{n\to\infty} c \cdot \frac{n}{n+1} = 1$$ $$\therefore \ c = 1$$
+
+**Question 3.2** Find the cumulative distribution function of $X$ and sketch both the probability mass function and the cumulative density function.\
+**Solution.** $$F_X(x) = P(X \leq x) = \sum_{1}^{x} \frac{1}{x} - \frac{1}{x+1} = \frac{x}{x+1}$$ $$\begin{aligned}
+           F_X(x) = P(X \leq x) = 
+           \begin{cases}
+        0   &   -\infty < x < 1 \\
+        \frac{x}{x+1}   &   1 \leq x < \infty \\
+           \end{cases}
+         \end{aligned}$$
+         
+```{r echo = F, fig.aligned = 'center'}
+pdf <- function(x, y, xlabel = "x", ylabel = "y", main = "main", col = "black") {
+  n <- length(x)
+  plot(x=NULL,y=NULL,xlim=range(x[1]:x[n]),ylim=range(0:1),
+       xlab=xlabel, ylab=ylabel, main = main)
+  for (j in 1:(n-1)) {
+    lines(c(x[j],x[j]),c(0,y[j]), col = col)
+    if (j>=1) { 
+      points(x[j],y[j], pch=16, col = col) 
+    }
+  }
+}
+          
+pmf <- function(x,y, xlabel, ylabel, main) {
+  n <- length(x)
+  plot(x=NULL,y=NULL,xlim=range(x[1]:x[n]),ylim=range(0:1),
+       xlab=xlabel, ylab=ylabel, main = main)
+  for (j in 1:(n-1)) {
+    lines(c(x[j],x[j+1]),c(y[j],y[j]))
+    if (j>1) { points(x[j],y[j], pch=16) }
+    if (j<n-1) { points(x[j+1],y[j], pch=1) }
+  }
+}
+    x = 0:20
+    y1 = 1/(x*(x+1))
+    y2 = x/(x+1)
+    pdf(x, y1, "x", "P(X = x)", "Probability Mass Function")
+    pmf(x, y2, "x", "P(X ≤ x)", "Cumulative Density Function")
+```
+
+**Question 3.3** Calculate $P(X \geq 50)$ and $P(X \geq 50 \mid X \geq 40)$. \
+**Solution.**
+    $$P(X \geq 50) = 1 - P(X < 50) - 1 - P(X \leq 49) = 1 - \frac{49}{50} = \frac{1}{50}$$
+    $$P(X \geq 50 \mid X \geq 40) = \frac{1/50}{1/40} = \frac{4}{5}$$

@@ -1,0 +1,17 @@
+--- 
+title: "STAT0003 Further Probability and Statistics"
+author: "Ge Li (Sunny)"
+date: "March 15 2023"
+output: bookdown::gitbook
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is my documentation of my assignments and exercises of STAT0002.
+link-citations: yes
+always_allow_html: yes
+---
+# Preface {.unnumbered}
+This document is used to document my assignments and weekly exercises of STAT0003.

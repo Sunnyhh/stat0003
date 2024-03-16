@@ -1,0 +1,31 @@
+# Exercise Sheet 7
+
+## Question 1
+**Solution.** Let $X$ denote the weights of the dogs. According to Question 1 from Exercise Sheet 6, we obtain our sample mean and sample standard deviation:
+    $$\bar{X} = 40.84, \ S^2 = 1.75.$$
+    With the confidence coefficient $\alpha$, consider the pivotal quantity $$Q = \frac{(n-1)S^2}{\sigma^2} \ \dot\sim \ \chi_{n-1}^2$$
+    $$\because \ P \bigg(\chi_{\alpha/2}^2 \leq \frac{(n-1)S^2}{\sigma^2} \leq \chi_{1-\alpha/2}^2 \bigg) = 1 - \alpha$$
+    $$\therefore \ P \bigg(\frac{(n-1)S^2}{\chi_{1-\alpha/2}^2} \leq \sigma^2 \leq \frac{(n-1)S^2}{\chi_{\alpha/2}^2} \bigg) = 1 - \alpha$$
+    As a result, the $(1 - \alpha) \cdot 100\%$ confidence interval for $\sigma^2$ is
+    $$\bigg(\frac{(n-1)S^2}{\chi_{1-\alpha/2}^2}, \ \frac{(n-1)S^2}{\chi_{\alpha/2}^2} \bigg)$$
+    While the $(1 - \alpha) \cdot 100\%$ confidence interval for $\sigma$ is therefore 
+    $$\bigg(\sqrt{\frac{(n-1)S^2}{\chi_{1-\alpha/2}^2}}, \ \sqrt{\frac{(n-1)S^2}{\chi_{\alpha/2}^2}} \bigg)$$
+    In this case, since we are required to to find the $92\%$ confidence interval for $\sigma$, we take $\alpha = 0.08$ as the confidence coefficient. We compute $\chi_{\alpha/2}^2 = 2.54$ using the R command `qchisq(0.04, df = 8)` and $\chi_{1-\alpha/2}^2 = 16.17$ using the R command `qchisq(0.96, df = 8)`. Therefore, the $92\%$ confidence interval for $\sigma$ is
+    $$\bigg(\sqrt{\frac{8 \cdot 1.75}{16.17}}, \ \sqrt{\frac{8 \cdot 1.75}{2.54}}\bigg) = (0.93, 2.35)$$
+    This represents that we are $92\%$ confident that the population standard deviation of the weights of the dogs is between the range $0.93$ and $2.35$.
+    
+## Question 2
+**Question 2.1** \
+**Solution** $$H_0: \sigma^2 > 25$$ $$H_1: \sigma^2 \leq 25$$
+    $$\begin{aligned}
+    & \text{Test statistics: } \chi^2 = \frac{(n-1)s^2}{\sigma^2} \ \dot\sim \ \chi_{9}^2 \\
+    & \text{Observed test statistics: } \chi^2 = \frac{(10-1) \cdot 20.2}{25} = 7.272 \\[0.5em]
+    & \text{P-Value: } P = P(\chi_9^2 \leq 7.272) = 0.3912 \end{aligned}$$
+
+**Question 2.2**\
+**Solution** $$H_0: \sigma^2 < 25$$ $$H_1: \sigma^2 \geq 25$$
+    $$\begin{aligned}
+    & \text{Test statistics: } \chi^2 = \frac{(n-1)s^2}{\sigma^2} \ \dot\sim \ \chi_{9}^2 \\
+    & \text{Observed test statistics: } \chi^2 = \frac{(10-1) \cdot 20.2}{25} = 7.272 \\[0.5em]
+    & \text{P-Value: } P = P(\chi_9^2 \geq 7.272) = 0.6088 \end{aligned}$$
+    

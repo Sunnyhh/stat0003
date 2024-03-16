@@ -1,0 +1,48 @@
+# Exercise Sheet 3
+
+## Question 1
+A geological study indicates that an exploratory oil well drilled in a certain region should strike oil with probability $0.3$, independently of other wells drilled. Find the probability that the first strike of oil comes on the third well drilled. Find the probability that the third strike of oil comes on the fifth well drilled.\
+**Solution.** Let $X$ denote the number of well drilled until the first strike of oil comes, since then $X$ follows the distribution $$X \sim \text{geom}(0.3).$$ Therefore, the probability that the first strike of oil comes on the third well drilled is $$P(X = 3) = 0.3 \cdot (1-0.3)^2 = 0.147.$$
+Let $M$ denote the event that the third strike of oil comes on the fifth well drilled. The probability of striking oil successfully in the fifth well is $0.3$, while the probability of having $2$ wells striking oil successfully in the first $4$ wells follows a binomial distribution $\sim \text{bin}(4,0.3)$. Therefore, the probability that the third strike of oil comes on the fifth well drilled is
+$$P(M) = \binom{4}{2} \cdot 0.3^2 \cdot 0.7^2 \times 0.3 = 0.07938.$$
+
+## Question 2
+An exam paper consists of $10$ multiple choice questions, each offering $4$ choices of which only $1$ (randomly assigned) is correct. If a candidate chooses her answers completely at random, what is the probability of each of the following, specifying the distribution used in each case.
+
+**Question 2.1** She gets at least $8$ questions right.\
+**Solution.** Let $X$ denote the number of questions the candidate gets correct, as a result, $X$ follows
+$$X \sim \text{bin}(10,0.25).$$
+Therefore, the probability the candidate gets at least $8$ questions right is
+$$P(X \geq 8) = \sum_{i = 8}^{10} P(X = i) = \sum_{i=8}^{10} \binom{10}{i} \cdot 0.25^{i} \cdot 0.75^{10-i} = 4.158 \cdot 10^{-4}.$$
+    
+**Question 2.2** The last of the $10$ questions is the $8$th one she gets rights.\
+**Solution.** Let $E$ denote the event that the last question being the eighth one the candidate gets right.
+The probability of the $10$th question being correct is $0.25$. The probability of the candidate getting $7$ questions among the first $9$ questions correct is $P(X = 7)$, where in this particular case $X$ follows the distribution $$X \sim \text{bin}(9, 0.25).$$
+Therefore, the final probability 
+$$P(E) = 0.25 \cdot P(X = 7) = 0.25 \times \binom{9}{7} \cdot 0.25^7 \cdot 0.75^2 = 3.090 \cdot 10^{-4}.$$
+    
+**Question 2.3** In $6$ such exams, she gets at least $8$ questions right in at most one exam.\
+**Solution.** Let $A$ denote the number of exams the candidate gets at least $8$ questions correct among the $6$ exams, $A$ follows the distribution $$A \sim \text{bin}(6, 4.158 \cdot 10^{-4}).$$ As a result, $$P(X \leq 1) = \sum_{i=0}^{1} \binom{6}{i} \cdot (4.158 \cdot 10^{-4})^i \cdot (1 - 4.158 \cdot 10^{-4})^{6-i} = 0.9999974.$$
+    
+**Question 2.4** She is told that in one exam, $6$ of the answers (at random) are given by the same unknown choice. What is the probability that in her first $4$ answers the candidate chooses $3$ from that set of $6$.\
+**Solution.** The event that the candidate chooses 3 from that set of $6$ answers in her first 4 answers follows the hypergeometric distribution $\sim \text{Hypergeometric}(10, 3, 6).$
+$$P = \frac{\binom{4}{3} \cdot \binom{6}{3}}{\binom{10}{6}} = 0.3810.$$
+    
+## Question 3
+Let $X \sim \text{Poi}(\mu)$. Prove that $\mathbb{E}(X) = \mathbb{Var}(X) = \mu$.\
+$$\mathbb{E}(X) = \sum_{\text{all x}} x \cdot \frac{e^{-\mu} \cdot \mu^x}{x!} = \mu e^{-\mu} \sum_{\text{all x}} \frac{\mu^{x-1}}{(x-1)!}$$ Since we can identify that $\sum_{\text{all x}} \frac{\mu^{x-1}}{(x-1)!}$ is the expansion of $e^{\mu}$,
+$$\mathbb{E}(X) = \mu e^{-\mu} \cdot e^{\mu} = \mu.$$
+In order to calculate the variance $\mathbb{Var}(X)$, we need to first calculate the expectation of $X^2$, 
+$$\begin{aligned}
+\mathbb{E}(X^2) &= \sum_{\text{all x}} x^2 \cdot \frac{e^{-\mu} \cdot \mu^x}{x!} \\
+&= \mu e^{-\mu}  \cdot \sum_{\text{all x}} \frac{\mu^{x-1}}{(x-1)!} \cdot [(x-1)+1] \\
+&= \mu e^{-\mu} \cdot (\mu \sum_{\text{all x}} \frac{\mu^{x-2}}{(x-2)!} + \sum_{\text{all x}} \frac{\mu^{x-1}}{(x-1)!}) \\
+&= \mu e^{-\mu} \cdot (\mu e^{\mu} + e^{\mu}) \\[0.5em]
+&= \mu^2 + \mu.
+\end{aligned}$$
+Therefore, the variance of $X$ is 
+$$\mathbb{Var}(X) = \mathbb{E}(X^2) - [\mathbb{E}(X)]^2 = \mu^2 + \mu - \mu^2 = \mu$$
+As a result, we have proved that $\mathbb{E}(X) = \mathbb{Var}(X) = \mu$.
+
+
+    

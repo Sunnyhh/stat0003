@@ -1,0 +1,31 @@
+# Exercise Sheet 8
+
+We want to test whether the mean lifetime of a particular type of bulb is equal to $20$ days. A random sample of $25$ such bulbs from brand $A$ was selected, and their lifetime was recorded. The sample mean was $18.3$ days and you may assume that the population standard deviation $\sigma_A = 4$ days. For the purpose of this question you can assume that the lifetime of these bulbs in days follows a normal distribution.
+
+**Question 1** Perform a suitable statistical test to decide whether the lifetime of these types of bulbs is indeed $20$ days. What do you conclude?\
+**Solution.** We first set up our null hypothesis and alternative hypothesis.$$H_0: \mu = 20, \ H_1: \mu \neq 20.$$ $$\begin{aligned} & \text{Test-Statistic:} \quad T_0 = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim \text{N}(0,1) \\
+& \text{Observed Test-Statistic:} \quad t = \frac{18.3 - 20}{4 / \sqrt{25}} = -2.125 \\[0.3em]
+& \textbf{P-Value:} \quad P = P(T_0 \leq -2.125) + P(T_0 \geq -2.125) = 2 \cdot P(T_0 \leq -2.125) = 0.0336 \end{aligned}$$
+We would fail to reject the null hypothesis if we use a significance level less than the p-value $0.0336$.
+
+**Question 2** If the mean lifetime is actually $\mu_x = 19.5$ days, and you assume a $1\%$ significance level, calculate the power of the test and the probability of a type II error.\
+**Solution.** $$H_0: \mu = 20, \ H_1: \mu \neq 20.$$
+$$\begin{aligned} & \text{Original Test-Statistic:} \quad T_0 = \frac{\bar{x} - 20}{4/\sqrt{25}} \sim \text{N}(0,1) \\
+& \begin{aligned} \text{Rejection Region:} \quad & \bar{x} < 20 - Z_{1-\alpha/2} \cdot \frac{4}{5} \quad \text{or} \quad \bar{x} > 20 + Z_{1-\alpha/2} \cdot \frac{4}{5} \\[0.5em]
+& \bar{x} < 17.9393 \quad \text{or} \quad \bar{x} > 22.0607
+\end{aligned} \\[0.5em]
+& \text{New Test Statistic:} \quad \frac{\bar{x} - 19.5}{4 / \sqrt{25}} \sim \text{N}(0,1) \ \text{under} \ H_1 \\[0.5em]
+& \text{Power:} \ P(\text{Reject } H_0 \mid \mu = 19.5) = P\bigg(Z < \frac{17.9393 - 19.5}{0.8} \bigg) + P \bigg(Z > \frac{22.0607 - 19.5}{0.8} \bigg) = 0.0262 \\[0.5em]
+& \text{Probability of Type II Error:} \ P = 1 - 0.0262 = 0.9738
+\end{aligned}$$
+
+**Question 3** Construct a $95\%$ confidence interval for $\sigma_B^2$ and draw a conclusion.\
+**Solution.** $$\alpha = 1 - 0.95 = 0.05$$
+    $$\text{Confidence Interval:} \ \bigg(\frac{(n-1)S^2}{\chi_{n-1; 1-\alpha/2}^2}, \ \frac{(n-1)S^2}{\chi_{n-1; \alpha/2}^2}\bigg) = \bigg(\frac{(30-1) \cdot 3^2}{45.7223}, \ \frac{(30-1) \cdot 3^2}{16.0471} \bigg) = (5.7084, \ 16.2647).$$
+    Generally, although $\sigma_A^2 = 16$ falls within the $95\%$ confidence interval for $\sigma_B^2$, it is at a relatively high position in the interval. As a result, the light bulbs produced by brand B may have less variability in lifetime.
+    
+**Question 4** \
+**Solution.** We can compute the test-statistic of $\sigma_A^2 / \sigma_B^2$ and decide whether to reject the null hypothesis using F-distribution.
+
+**Assumptions.** First, the lifetime of all the light bulbs are independent and identically distributed. Second, the lifetime of these light bulbs follows a normal distribution.\
+**Relevance.** Unbiased estimators are required for both tests.

@@ -1,0 +1,40 @@
+# Exercise Sheet 6
+
+## Question 1
+Here are the weights of some rather greedy dogs (in kgs): $39.6 \ 40.2 \ 40.9 \ 41.4 \ 39.8 \ 39.4 \ 43.6 \ 41.8 \ 40.9$.\
+**Question 1.1** Assuming a Normal model for the population of such dogs, calculate the $92\%$ confidence interval for $\mu$ and interpret this in words.\
+**Solution.** Let $X$ denote the weights of the dogs. We first compute the sample mean and sample variance of the data.
+$$\bar{X} = \frac{\sum X_i}{n} = \frac{1}{9} \cdot (39.6+40.2+40.9+41.4+39.8+39.4+43.6+41.8+40.9) = 40.84$$
+$$\because \ S^2 = \frac{\sum (X_i - \bar{X})^2}{n-1} = \frac{\sum X_i^2 - 2\bar{X}\sum X_i + n\bar{X}^2}{n-1} = \frac{\sum X_i^2 - n \bar{X}^2}{n-1}$$ 
+$$\therefore \ S^2 = \frac{39.6^2 + 40.2^2 + 40.9^2 + 41.4^2 + 39.8^2 + 39.4^2 + 43.6^2 + 41.8^2 + 40.9^2 - 9 \cdot \bar{X}^2}{9-1} = 1.75$$
+Consider the pivotal quantity
+$$T = \frac{\sqrt{n}(\bar{X}-\mu)}{S} \ \dot\sim \ \text{t}(\text{df} = n-1).$$
+$$\because \ P \bigg(t_{\alpha/2} < \frac{\sqrt{n}(\bar{X}-\mu)}{S} < t_{1-\alpha/2} \bigg) = 1 - \alpha$$
+$$\therefore P \bigg(\bar{X} - t_{1-\frac{\alpha}{2}} \frac{S}{\sqrt{n}} < \mu < \bar{X} + t_{1-\frac{\alpha}{2}} \frac{S}{\sqrt{n}} \bigg) = 1 - \alpha$$
+As a result, the $(1-\alpha) \cdot 100\%$ confidence interval for $\mu$ is 
+$$\bigg(\bar{X} - t_{1-\frac{\alpha}{2}} \frac{S}{\sqrt{n}}, \ \bar{X} + t_{1-\frac{\alpha}{2}} \frac{S}{\sqrt{n}} \bigg)$$
+In this case, since we are required to find the $92\%$ confidence interval for $\mu$, we take $\alpha = 0.08$ as the confidence coefficient. We compute $t_{8, 0.96}$ using the R command `qt(0.96, df = 8)` which returns $t_{8, 0.96} = 2.00$.
+Therefore, the $92\%$ confidence interval for $\mu$ is 
+$$\bigg( 40.84 - 2 \cdot  \frac{\sqrt{1.75}}{3}, \ 40.84 + 2 \cdot  \frac{\sqrt{1.75}}{3} \bigg) = (39.96, 41.72).$$
+This represents that we are $92\%$ confident that the population mean of the weights of the dogs is between the range $39.96$ and $41.72$.
+
+**Question 1.2** What caused the difference in confidence interval for $\mu$ in $2$ exercises?\
+**Solution.** The difference in confidence interval for $\mu$ is caused by different distributions we used to approximate the random variables. In last exercise, we used Standard Normal Distribution instead of Student T Distribution since the population variance were known and given to us ($\sigma^2 = 2$). Note that the reason of one of the confidence intervals being wider than the another is that T Distribution has fatter tails and therefore has larger quantiles, which evantually lead to a wider confidence interval.
+    
+## Question 2
+We decide to model cars entering a motorway service station with a Poisson Process of rate $1500$ / day.\
+**Question 2.1** Which exact distribution would we use to model the total number of cars that enter
+during June? \
+**Solution.** We should use Poisson Distribution. Let $Y$ denote the number of cars entering the motorway service station every day. According to what we are given, $Y \sim \text{Pois}(1500)$. Then, let $X$ denote the number of cars entering the motorway service station in June, which is a 30-day period, $X$ follows the Poisson Distribution $X \sim \text{Pois}(45000)$.
+    
+**Question 2.2** Use the CLT to calculate the probability that greater than $44800$ but less than $45200$ cars entered during June, defining the appropriate random variables formally. Are the conditions for the CLT satisfied? \
+**Solution.** Let $X$ denote the total number of cars entering the service station in June. We can consider $X$ as the sum of $30$ I.I.D random variables with mean and variance $\mu = \sigma^2 = 1500$. Therefore, we can approximate $$X \dot\sim N(30\cdot 1500, 30\cdot 1500) = N(45000, 45000).$$
+As a result, the probability that greater than $44800$ but less than $45200$ cars entered during June is
+$$P(44800 - 0.5 < X < 45200 + 0.5) = \Phi \bigg(\frac{45200.5 - 45000}{\sqrt{45000}} \bigg) - \Phi \bigg(\frac{44799.5-45000}{\sqrt{45000}} \bigg) = 0.6578$$
+Alternatively, the R command `pnorm(45200.5, 45000, sqrt(45000)) - pnorm(44799.5, 45000, sqrt(45000))` returns $0.6554$.
+    
+    
+    
+    
+    
+    

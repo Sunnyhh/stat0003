@@ -1,0 +1,30 @@
+# Exercise Sheet 5
+
+## Question 1
+The annual rainfall in inches in a certain region is modelled by a normal random variable with mean $40$ and variance $16$ What is the probability that it will take at least $5$ years until a year occurs having a rainfall of over $45$ inches? What assumptions are you making? \
+**Solution.** Assumption: annual rainfall of each year is independent.\
+Let $X$ denote the annual rainfall in inches in that certain region. $$X \sim \text{norm}(40, 16)$$
+Therefore, the probability of a year having a rainfall of over $45$ inches is $$P(X > 45) = 1 - P(X \leq 45) = 1 - \Phi \bigg(\frac{45-40}{4}\bigg) = 1 - 0.8944 = 0.1056.$$ Alternatively, we can use the R command `pnorm(45, 40, 4, lower.tail = F)` to find the probability. Let $Y$ denote the number of years until a year occurs having a rainfall of over $45$ inches. Therefore, $Y$ follows the geometric distribution $$Y \sim \text{geom}(0.1056).$$
+The probability that it takes at least $5$ years until a year occurs having a rainfall of over $45$ inches is 
+$$P(Y \geq 5) = 1 - P(Y \leq 4) = 1 - (1 - (1 - 0.1056)^4) = 0.6399.$$ Alternatively, we can use the R command `pgeom(3, 0.1056, lower.tail = F)` to find the probability.
+
+## Question 2
+Assume that $X_1, ..., X_{10}$ are independent normally distributed random variables, each with mean $5$ and variance $1$.\
+**Question 2.1** Find the probability that $X_i > 5$ for all $i = 1,...,10$.\
+**Solution.** For all $X_1, ..., X_{10}$, the probability of $X_i > 5$ is 
+$$P(X_i > 5) = 1 - P(X_i \leq 5) = 1 - \Phi(0) = 0.5.$$
+    
+**Question 2.2** Find the probability that at least two of the $X_i$s are greater than $5$.\
+**Solution.** Let $A$ denote the number of $X_i$s that are greater than $5$. Since then, $A$ follows the binomial distribution 
+$A \sim \text{binom}(10, 0.5)$.
+$$P(A \geq 2) = 1 - P(A \leq 1) = 1 - \binom{10}{0} \cdot 0.5^{10} - \binom{10}{1} \cdot 0.5^{10} = 0.9893.$$
+
+**Question 2.3** Find the probability that the sample mean of the $X_i$s is greater than $5.1$.\
+**Solution.** For $X_1, ..., X_{10}$ that are independent normally distributed random variables with mean $5$ and variance $1$, the sample mean of $X_i$s is normally distributed with mean $5$, and variance $\frac{1}{10}$.
+$$P(\bar{X} > 5.1) = 1 - P(\bar{X} \leq 5.1) = 1 - \Phi\bigg(\frac{5.1-5}{\sqrt{1/10}}\bigg) = 1 - 0.6255 = 0.3745,$$
+R command `pnorm(5.1, 5, sqrt(1/10), lower.tail = F)` returns $P(\bar{X} > 5.1) = 0.3759$. 
+
+**Question 2.4** Without doing any further calculations, write down the probability that the sum of all the $X_i$s is greater than $51$. Why were no further calculations necessary? \
+**Solution.** The probability that the sum of all the $X_i$s is greater than $51$ is the same as the probability that the sample mean of the $X_i$s is greater than $5.1$ since if the sample mean is greater than $5.1$, the sum would definitely be greater than $51$.
+    $$\therefore \ P \bigg(\sum_{i=1}^{10} X_i > 51 \bigg) = P(\bar{X} > 5.1) = 0.3745 \ \text{or} \ 0.3759.$$
+    

@@ -1,0 +1,69 @@
+# Exercise Sheet 4
+## Question 1
+Trains arrive at a station with a mean rate of $3$ trains/hour: assume that they are arriving from a Poisson Process. Compute the following probabilities (making sure that you clearly define the random variables you are using in each case). You may only use R or a calculator for the exponential function (not for any probability distributions):
+
+**Question 1.1** If we record the number of trains for $3$ hours, there are more than $5$.\
+**Solution.** Let $X$ denote the number of trains arriving in $3$ hours.
+$$X \sim \text{pois}(9)$$
+$$P(X > 5) = 1 - \sum_{n = 0}^{5} \frac{e^{-9} \cdot 9^n}{n!} = 0.8843$$
+
+**Question 1.2** If we go to the station and wait for the first train to arrive, then we will not wait more than 10 minutes.\
+**Solution.** Let $T$ denote the time passengers wait for the train to arrive.
+$$T \sim \text{exp}(3)$$
+$$P(T \leq 1/6) = 1 - (1-e^{-3(1/6)}) = 0.3934$$
+**Question 1.3** If we go to the station and take the third train that comes, we will not wait more than 30 minutes. Evaluate the integral by repeated integration by parts.\
+**Solution.** $$T \sim \text{gamma}(\text{shape} = 3, \text{rate} = 3/2)$$
+$$\begin{aligned}
+P(T \leq 1) &= \int_0^1 \frac{(3/2)^3x^2 e^{-3x/2}}{2!} \,dx = \frac{27}{16} \int_0^1 x^2 e^{-3x/2} \,dx \\
+&= \frac{27}{16}\bigg[x^2(-2/3)e^{-3x/2}\bigg]_0^1 - \frac{27}{16} \int_0^1 (-\frac{4}{3}xe^{-3x/2}) \,dx \\
+&= \frac{27}{16}(-2e^{-3/2}/3 - \frac{40}{27}e^{-3/2} + \frac{16}{27}) \\[0.3em]
+&\approx 0.1912
+\end{aligned}$$
+We can confirm this answer by using *pgamma(1,3,3/2)*.
+These are not sensible assumptions, considering the fact that trains don't arrive at stations at randomly chosen time, and the time of arrivals of each train may not necessarily be independent.
+
+
+## Question 2
+The probability density function of $X$, the lifetime in hours of a certain type of electronic device is given by 
+$$f(x) = \begin{cases} 10/x^2 & x > c \\ 0 & \text{otherwise} \end{cases}$$
+Find $c$ and $P(X > 15)$. What is the probability that out of $5$ such devices at least $4$ will function for at least $15$ hours (assume the lifetimes of the devices are independent)?\
+**Solution.** $$F_X(x) = \int_{x=c}^{\infty} \frac{10}{x^2} \,dx = 1$$
+$$\therefore \ \bigg[-\frac{10}{x} \bigg]_c^\infty = 1$$
+$$\therefore \ c = 10$$
+$$P(X > 15) = \int_{15}^{\infty} \frac{10}{x^2} \,dx = \bigg[-\frac{10}{x} \bigg]_{15}^\infty = \frac{2}{3}$$
+Let M denote the number of the electronic devices that function well for at least $15$ hours.
+$$M \sim \text{binom}(5, \frac{2}{3})$$
+$$P(M \geq 4) = \binom{5}{4}\bigg(\frac{2}{3}\bigg)^4\bigg(\frac{1}{3}\bigg)^1 + \binom{5}{5}\bigg(\frac{2}{3}\bigg)^5 = 0.4609$$
+
+## Question 3
+**Question 3.1** The mean of a $\text{Gamma}(\alpha, \lambda)$ distribution.\
+**Solution.** Since we are given that
+$$\int_{0}^{\infty} \frac{x^{\alpha-1} e^{-\lambda x} \lambda^\alpha}{\Gamma(\alpha)} \,dx = 1.$$
+$$\begin{aligned}
+\mathbb{E}(X) &= \int_{0}^{\infty} x \cdot \frac{x^{\alpha-1}e^{-\lambda x} \lambda^\alpha}{\Gamma(\alpha)} \,dx \\
+&= \int_{0}^{\infty} \frac{x^{\alpha}e^{-\lambda x} \lambda^{\alpha+1}}{\lambda \cdot \Gamma(\alpha)} \,dx \\
+&= \frac{\alpha}{\lambda} \int_{0}^{\infty}  \frac{x^{\alpha} e^{-\lambda x} \lambda^{\alpha+1}}{\Gamma(\alpha+1)} \,dx \\
+&= \frac{\alpha}{\lambda}
+\end{aligned}$$
+
+**Question 3.2** Find the result of $\int_0^{\infty} x^2 e^{-cx} \,dx$.\
+**Solution.** $$\Gamma(3) = \int_0^{\infty} x^2 e^{-cx} \,dx$$
+We use substitution, let $u = cx$, then $dx = \frac{1}{c}du$.
+$$\int_0^{\infty} x^2 e^{-cx} \,dx = \frac{1}{c^3} \int_{0}^{\infty} u^2 e^{-u} \,du = \frac{2}{c^3}$$
+
+**Question 3.3** Derive the Mean and Variance of continuous r.v. $X$, whose pdf is $\frac{a}{2}e^{-a|x|}$ over the real line.\
+**Solution.** \
+$$\begin{aligned}
+\mathbb{E}(X) &= \int_{-\infty}^{\infty} \frac{ax}{2}e^{-a|x|} \,dx \\
+&= \frac{1}{2} \bigg(\int_{-\infty}^{0} axe^{-ax} \,dx + \int_{0}^{\infty} axe^{-ax} \,dx \bigg) \\
+&= 0
+\end{aligned}$$
+$$\begin{aligned}
+\mathbb{E}(X^2) &= \int_{-\infty}^{\infty} \frac{ax^2}{2}e^{-a|x|} \,dx \\
+&= \int_{0}^{\infty} ax^2e^{-ax} \,dx \\
+&= a \int_{0}^{\infty} x^2 e^{-ax} \,dx \\
+&= a \cdot \frac{2}{a^3} \ \text{(according to (b))} \\
+&= \frac{2}{a^2}
+\end{aligned}$$
+As a result, the variance is $$\mathbb{Var} = \frac{2}{a^2}.$$
+
